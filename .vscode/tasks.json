@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "type": "npm",
+            "script": "compile",
+            "options": 
+            {
+                "statusbar": 
+                {
+                    "label": "Build",
+                    "hide": false,
+                    "tooltip": "yarn run webpack --mode development"
+                }
+            },
+            "group": "build",
+            "problemMatcher": 
+            [
+                "$ts-webpack",
+                "$ts-webpack-watch",
+                "$tsc",
+                "$tsc-watch",
+            ],
+            "label": "npm: compile:watch",
+            "detail": "yarn run webpack --mode development"
+        }
+    ]
+}
