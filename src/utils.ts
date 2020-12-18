@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import * as _ from 'lodash';
+import * as os from 'os'
 import * as absolute from 'absolute';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
@@ -50,6 +51,32 @@ const Utils = {
 
     return new Promise ( resolve => setTimeout ( resolve, ms ) );
 
+  },
+
+  path:
+  {
+   
+    homeTildePrefixRegex: /^~[\\\/]+/,
+
+    /**
+     * Expand home directory tilde to full path. Will not replace tilde if after directory
+     * separator (to allow for relative directory names using ~.)
+     */
+    expandHomeTilde(fsPath: string)
+    {
+      const { root, dir } = path.parse( fsPath )
+
+      // Only replace when no root directory parsed, and dir begins with ~/
+      if( root === '' && Utils.path.homeTildePrefixRegex.test( dir ) ) {
+
+        return path.resolve( os.homedir(), fsPath.replace( Utils.path.homeTildePrefixRegex, '' ) )
+
+      } else {
+
+        return fsPath
+
+      };
+    }
   },
 
   file: {

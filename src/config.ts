@@ -24,7 +24,19 @@ const Config = {
 
   getExtension ( extension = 'terminals' ) {
 
-    return vscode.workspace.getConfiguration ().get ( extension ) as any;
+    return ( rawConfig => {
+
+        // Expand home tilde alias in configurations
+        if( 'configPath' in rawConfig && typeof rawConfig['configPath'] === 'string' )
+        {
+
+            rawConfig.configPath = Utils.path.expandHomeTilde(rawConfig.configPath);
+
+        }
+
+        return rawConfig;
+
+    } )( vscode.workspace.getConfiguration ().get ( extension ) as any )
 
   },
 
